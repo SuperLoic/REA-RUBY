@@ -15,14 +15,6 @@ class Tabletop
   end
 end
 
-class Response
-  attr_accessor :status, :message
-  def intialize (status, message)
-    @status = status
-    @message = message
-  end
-end
-
 class Command
   def initialize (robot = Robot.new, tabletop = Tabletop.new)
     @robot = robot
