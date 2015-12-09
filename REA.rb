@@ -28,8 +28,11 @@ class Command
     @robot = robot
     @tabletop = tabletop
   end
+  def placable
+    @robot.x < @tabletop.unitX-1 && @robot.y < @tabletop.unitY-1
+  end 
   def exec (command, *args)
-    puts command
+    puts command if placable || (!placable && !["MOVE","RIGHT","LEFT","REPORT"].include?(command))
     case command
     when /^PLACE\s\d,\d,(NORTH|SOUTH|WEST|EAST)$/ then
       split= command.chomp.split(/\s|,/)
@@ -49,7 +52,7 @@ class Command
       end
     when "LEFT" then @robot.direction = rotate(-1)
     when "RIGHT" then @robot.direction = rotate(1)
-    when "REPORT" then puts "\nExpected output: \n\n #{@robot.x},#{@robot.y},#{@robot.direction}"
+    when "REPORT" then puts "\nExpected output: \n\n #{@robot.x},#{@robot.y},#{@robot.direction}" if placable
     end
     @robot
   end
