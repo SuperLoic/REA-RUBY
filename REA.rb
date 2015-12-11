@@ -42,18 +42,18 @@ class Command
       when "EAST" then
         @robot.x  == @tabletop.unitX - 1 ? @tabletop.unitX : @robot.x += 1
       end
-    when "LEFT" then @robot.direction = rotate(-1)
-    when "RIGHT" then @robot.direction = rotate(1)
+    when "LEFT" then @robot.direction = rotate(-90)
+    when "RIGHT" then @robot.direction = rotate(90)
     when "REPORT" then puts "\nExpected output: \n\n #{@robot.x},#{@robot.y},#{@robot.direction}" if placable
     end
     @robot
   end
   
   def rotate(offset)
-    direction = {"NORTH"=>0,"EAST"=>1,"SOUTH"=>2,"WEST"=>3,0=>"NORTH",1=>"EAST",2=>"SOUTH",3=>"WEST"}
+    direction = {"NORTH"=>0,"EAST"=>90,"SOUTH"=>180,"WEST"=>270,0=>"NORTH",90=>"EAST",180=>"SOUTH",270=>"WEST"}
     index = @robot.direction
-    if direction[index] + offset < 0 then pointer = direction[3]
-    elsif direction[index] + offset > 3 then pointer = direction[0]
+    if direction[index] + offset < 0 then pointer = direction[270]
+    elsif direction[index] + offset > 270 then pointer = direction[0]
     else pointer = direction[direction[index] + offset]
     end
     pointer
